@@ -37,6 +37,12 @@ td.n{width:80px;text-align:center;color:var(--mute)}
 .body ol,.body ul{padding-left:20px}
 .body code{background:#0d0d0d;border:1px solid var(--line);padding:0 4px}
 .body img{max-width:100%}
+
+/* Video nhúng (tỉ lệ 16:9) */
+.video{position:relative;width:100%;padding-top:56.25%;background:#000;border:1px solid var(--line);margin-bottom:12px}
+.video iframe,.video video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video.ph{display:flex;align-items:center;justify-content:center;padding-top:0;min-height:200px;color:var(--mute)}
+
 .foot{text-align:center;color:var(--mute);font-size:11px;margin:20px 0}
 .notice{background:#241210;border:1px solid var(--accent);padding:8px 10px;margin-bottom:10px;font-size:12px}
 @media(max-width:700px){.logo{font-size:20px}}
@@ -48,19 +54,21 @@ td.n{width:80px;text-align:center;color:var(--mute)}
     <div><div class="logo">ANSHARE<b>SUPPORT</b></div><p>FAQ and Game-Running Guide for AnshareGames</p></div>
     <a href="https://anshare.me" target="_blank" rel="noopener"><button>← Back to main site anshare.me</button></a>
   </div>
-  <div class="nav"><a href="#/">Home</a><a href="#/f/faq">FAQ</a><a href="#/f/run">How To Run Games</a></div>
+  <div class="nav"><a href="#/">Home</a><a href="#/f/faq">FAQ</a><a href="#/f/run">How To Run Games</a><a href="#/f/dl">Downloads &amp; Troubleshooting</a></div>
   <div id="app"></div>
   <div class="foot">AnshareSupport · linked to <a href="https://anshare.me" target="_blank" rel="noopener">anshare.me</a></div>
 </div>
 
 <script>
 
+
+const yt=id=>id?'<div class="video"><iframe src="https://streamable.com/e/'+id+'" allowfullscreen style="width:100%;height:100%;border:0;"></iframe></div>':'<div class="video ph">Video coming soon</div>';
 const forums=[
  {id:"faq",name:"FAQ - Frequently Asked Questions",desc:"Quick answers to common questions.",
   topics:[
    {title:"What is anshare.me?",body:"<p>AnshareGames is a free platform for sharing and archiving PC games in pre-installed (portable) format. All games hosted here feature clean, pre-unlocked files—allowing users to simply download, extract, and play immediately without going through complex installation steps.</p>"},
    {title:"Are the download links on anshare.me safe?",body:"<p>Absolutely. Safety and file integrity are our top priorities. Every game on anshare.me is verified, clean, and pre-packaged for immediate play. We distribute files directly through high-speed storage providers like Catbox alongside optimized torrent mirrors, ensuring a fast, secure, and hassle-free download experience.</p>"},
-   {title:"How do I download a game?",body:"<p>Simply click the <b>Download</b> button on any game page to open the download modal with two flexible options:</p><ul><li><b>Direct Link:</b> Downloads the game directly via Google Drive for maximum speed.</li><li><b>Torrent:</b> Downloads a <code>.torrent</code> file hosted on Catbox, which you can open with your torrent client (such as qBittorrent) to download the game.</p>"},
+   {title:"How do I download a game?",body:"<p>Simply click the <b>Download</b> button on any game page to open the download modal with two flexible options:</p><ul><li><b>Direct Link:</b> Downloads the game directly via Google Drive for maximum speed.</li><li><b>Torrent:</b> Downloads a <code>.torrent</code> file hosted on Catbox, which you can open with your torrent client (such as qBittorrent) to download the game.</li></ul>"},
    {title:"My antivirus detected a Trojan or malware in the game file. Is it a virus?",body:"<p>No, this is a <b>False Positive</b> (false alarm). Many antivirus tools (including Windows Defender) flag modified <code>.dll</code> files or crack fixes simply because they override standard licensing checks to make portable games playable.</p><p>Every game on <b>anshare.me</b> is tested and clean. To resolve this issue, temporarily disable your antivirus or add the game folder to your antivirus Exclusion List (White-list) before extracting the <code>.zip</code> file.</p>"},
    {title:"Where are my save files located?",body:"<p>Save locations vary depending on the game and its crack group/emulator (such as Goldberg, RUNE, EMPRESS, or SKIDROW). However, most PC game saves can be found in one of these common directories:</p><ul><li><code>C:\\Users\\%USERNAME%\\AppData\\Roaming\\</code></li><li><code>C:\\Users\\%USERNAME%\\AppData\\Local\\</code></li><li><code>C:\\Users\\%USERNAME%\\Documents\\</code></li><li>Inside the game's root installation folder under <code>/saves/</code> or <code>/steam_settings/</code></li></ul><p><b>Tip:</b> If you cannot find your save folder, check the specific game guide on <b>anshare.me</b> or search <code>GAMENAME save location</code> online.</p>"},
    {title:"Do these unlocked games support Multiplayer / Online mode?",body:"<p><b>Yes, absolutely!</b> Most supported games can be played online with your friends. Depending on the game, you can join online sessions via <b>Online-Fix (Steam Spacewar)</b> or play Co-op over virtual LAN networks using tools like <b>Radmin VPN</b> or <b>ZeroTier</b>.</p><p>Check the game detail page on <b>anshare.me</b> for specific instructions or Online-Fix patch downloads.</p>"},
@@ -75,13 +83,22 @@ const forums=[
      title:"Steps for Games",
      body:`<p><b>Important!:</b> Before downloading a game, make sure your computer meets the minimum requirements to run the game.</p><h3>Steps for Running a Game:</h3><ol><li>Make sure you used <b><a href="https://files.catbox.moe/j0de60.rar">Internet Download Manager</a></b> or <b>Free Download Manager</b> to download, as browser downloading can lead to corrupted files sometimes. If you don't have Internet Download Manager, you can download Free Download Manager for Free from their official site.</li><li>Make sure you turned both your <b>AntiVirus</b> (if you have one) and <b>Windows Security (Defender) OFF</b> before you extracted the game using WinRAR, otherwise it will delete the crack files.<br><i>Note: Follow and complete the instructions at the bottom of this note to setup a safe folder <b>EXCLUSION</b> that your AV will never touch or delete anything from.</i></li><li>Install all <b>_CommonRedist</b> as admin if you haven't already:<ul><li><code>dxwebsetup.exe</code></li><li><code>oalinst.exe</code></li><li><code>vcredist_2015-2019_x64.exe</code></li><li><code>vcredist_2015-2019_x86.exe</code></li><li><code>vcredist_x64.exe</code></li><li><code>vcredist_x86.exe</code></li><li><code>xnafx40_redist.msi</code></li></ul><p>If the provided _CommonRedist are not enough and you are still missing any of Redist program's DLL, then try the <b>VisualCppRedist AIO</b>. Get exe and install x64 or x86 depending on your system. It will automatically remove and reinstall everything.</p></li><li>Make sure your <b>graphics drivers are up-to-date</b>. To do so, in Windows search and open 'Device Manager'. In there, expand the 'Display Adapters' section and right click each item there. Click 'Update Driver' and choose the option to search automatically.</li><li><b>Run the game.exe as admin.</b> You might have to try all the .exe's in the folder if there is more than one. Make sure to check all subfolders too if you can't find the .exe or search the whole folder for '<code>.exe</code>'.</li></ol><hr><h3>WINDOWS DEFENDER EXCLUSION SETUP (to prevent it from deleting files)</h3><ol><li>Create a <b>GAMES</b> folder on your Hard drive.</li><li>Go to <b>Windows Security</b> (Shield icon on taskbar). You can also search it in Windows search.</li><li>Go to <b>Virus & threat protection</b> &gt; <b>manage settings</b> &gt; scroll down to exclusions, click '<b>add or remove exclusions</b>' & add the <b>GAMES</b> folder to the list.</li><li>Once everything is done, then you can always extract your game into that GAMES folder. Your antivirus will not detect it as a threat anymore or remove the game files.</li></ol>`
    }
+  ]},
+
+ 
+ {id:"dl",name:"Downloads & Troubleshooting",desc:"Video tutorials and written guides about downloading games and fixing download problems.",
+  topics:[
+   {title:"Video: How to download with Torrent",
+    body:yt("7palxt")+"<h3>Written guide</h3><ol><li><b>Find Your Game:</b> Browse through the game library on <code>anshare.me</code> and click on the game you want to download.</li><li><b>Get the Torrent File:</b> Click the <b>Download</b> button, select the <b>Torrent</b> option in the popup modal, and save the <code>.torrent</code> file to your PC.</li><li><b>Open Torrent Client:</b> Launch <b>qBittorrent</b> (or your preferred torrent client), click the <b>Add torrent file</b> icon (or press <code>Ctrl + O</code>), and select the downloaded <code>.torrent</code> file.</li><li><b>Choose Save Location & Start:</b> Select your desired download directory for the game, then click <b>OK</b> to begin downloading.</li></ol>"},
+   {title:"How to Bypass Google Drive 24-Hour Limit",
+    body:yt("")+"<h3>Written guide</h3><p>(fill in common download problems and solutions here)</p>"}
   ]}
 ];
 
 const app=document.getElementById("app");
 
 function home(){
-  let h='<div class="notice">"Select a category below. Need to download games? Head over to " <a href="https://anshare.me" target="_blank" rel="noopener">anshare.me</a>.</div><div class="crumb">Index</div><table><tr><th>Category</th><th class="n">Topics</th></tr>';
+  let h='<div class="notice">Select a category below. Need to download games? Head over to <a href="https://anshare.me" target="_blank" rel="noopener">anshare.me</a>.</div><div class="crumb">Index</div><table><tr><th>Category</th><th class="n">Topics</th></tr>';
   forums.forEach(f=>{h+='<tr><td><div class="ft"><a href="#/f/'+f.id+'">'+f.name+'</a></div><div class="fd">'+f.desc+'</div></td><td class="n">'+f.topics.length+'</td></tr>'});
   app.innerHTML=h+'</table>';
 }
